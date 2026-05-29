@@ -1,0 +1,14 @@
+.conda/
+.npm-cache/
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Local editor/runtime files
+.vscode/mcp.json
+
+# Downloaded datasets. Keep small CSV/TXT samples tracked, but do not commit large raw datasets.
+data/MNIST/
+p1/data/MNIST/
+p2/data/
