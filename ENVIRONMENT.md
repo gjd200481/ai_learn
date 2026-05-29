@@ -9,8 +9,8 @@
 - Python：3.12.13
 - 当前解释器：`.conda/dl_practice/python.exe`
 - 主要用途：Jupyter Notebook、传统机器学习、PyTorch/MNIST/CIFAR10 练习
-- GPU：NVIDIA GeForce RTX 3060 Laptop GPU
-- PyTorch：2.5.1，CUDA 12.1，当前验证 `torch.cuda.is_available()` 为 `True`
+- 当前电脑 GPU：NVIDIA GeForce RTX 3060 Laptop GPU
+- 当前电脑 PyTorch：2.5.1，CUDA 12.1，当前验证 `torch.cuda.is_available()` 为 `True`
 
 ## 项目用到的主要库
 
@@ -23,12 +23,26 @@
 
 ## 推荐安装方式
 
-在新电脑安装 Anaconda 或 Miniconda 后，在项目根目录执行：
+如果电脑没有 NVIDIA GPU，或者只想用 CPU，使用默认环境文件：
 
 ```powershell
 conda env create -f environment.yml
 conda activate dl-practice
 python -m ipykernel install --user --name dl-practice --display-name "Python (dl-practice)"
+```
+
+如果电脑有 NVIDIA GPU 并且驱动可用，使用 GPU 环境文件：
+
+```powershell
+conda env create -f environment.gpu.yml
+conda activate dl-practice
+python -m ipykernel install --user --name dl-practice --display-name "Python (dl-practice)"
+```
+
+如果已经有同名环境，需要先删除旧环境再按上面命令重建：
+
+```powershell
+conda env remove -n dl-practice
 ```
 
 然后启动 Jupyter：
@@ -37,7 +51,8 @@ python -m ipykernel install --user --name dl-practice --display-name "Python (dl
 jupyter lab
 ```
 
-`environment.yml` 默认安装 GPU 版 PyTorch：
+`environment.yml` 默认安装 CPU 版 PyTorch，适合没有独立显卡的电脑。  
+`environment.gpu.yml` 安装 GPU 版 PyTorch：
 
 - `pytorch=2.5.1`
 - `torchvision=0.20.1`
@@ -76,7 +91,7 @@ python -m pip install -r requirements.lock.txt
 "python.defaultInterpreterPath": "${workspaceFolder}\\.conda\\dl_practice\\python.exe"
 ```
 
-如果在其他电脑使用 `environment.yml` 创建环境，建议在 VS Code 中手动选择 `Python (dl-practice)` 环境解释器。  
+如果在其他电脑使用 `environment.yml` 或 `environment.gpu.yml` 创建环境，建议在 VS Code 中手动选择 `Python (dl-practice)` 环境解释器。  
 如果使用 `.venv`，可以改成：
 
 ```json
