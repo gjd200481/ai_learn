@@ -1,18 +1,20 @@
 # 环境清单
 
-这份清单用于在其他电脑上快速配置当前 `D:\Ai_learn` 项目所需的 Python 机器学习环境。
+这份清单用于在其他电脑上快速配置当前 `D:\Ai_learn` 项目所需的 Python 机器学习与深度学习环境。
 
 ## 当前环境
 
 - 操作系统：Windows
-- Conda：26.1.1
+- Conda：24.1.2
 - Python：3.12.13
 - 当前解释器：`.conda/dl_practice/python.exe`
-- 主要用途：Jupyter Notebook、传统机器学习、PyTorch/MNIST 练习
+- 主要用途：Jupyter Notebook、传统机器学习、PyTorch/MNIST/CIFAR10 练习
+- GPU：NVIDIA GeForce RTX 3060 Laptop GPU
+- PyTorch：2.5.1，CUDA 12.1，当前验证 `torch.cuda.is_available()` 为 `True`
 
 ## 项目用到的主要库
 
-- Notebook：`jupyter`、`ipykernel`、`ipywidgets`
+- Notebook：`notebook`、`jupyterlab`、`ipykernel`
 - 数据处理：`numpy`、`pandas`
 - 可视化：`matplotlib`
 - 机器学习：`scikit-learn`、`scipy`
@@ -25,8 +27,8 @@
 
 ```powershell
 conda env create -f environment.yml
-conda activate ai-learn
-python -m ipykernel install --user --name ai-learn --display-name "Python (ai-learn)"
+conda activate dl-practice
+python -m ipykernel install --user --name dl-practice --display-name "Python (dl-practice)"
 ```
 
 然后启动 Jupyter：
@@ -34,6 +36,15 @@ python -m ipykernel install --user --name ai-learn --display-name "Python (ai-le
 ```powershell
 jupyter lab
 ```
+
+`environment.yml` 默认安装 GPU 版 PyTorch：
+
+- `pytorch=2.5.1`
+- `torchvision=0.20.1`
+- `torchaudio=2.5.1`
+- `pytorch-cuda=12.1`
+
+需要 NVIDIA 显卡和可用的 NVIDIA 驱动。本机驱动显示支持 CUDA 12.3，可以运行 CUDA 12.1 版 PyTorch。
 
 ## 只使用 pip 的安装方式
 
@@ -65,7 +76,7 @@ python -m pip install -r requirements.lock.txt
 "python.defaultInterpreterPath": "${workspaceFolder}\\.conda\\dl_practice\\python.exe"
 ```
 
-如果在其他电脑使用 `environment.yml` 创建环境，建议在 VS Code 中手动选择 `ai-learn` 环境解释器。  
+如果在其他电脑使用 `environment.yml` 创建环境，建议在 VS Code 中手动选择 `Python (dl-practice)` 环境解释器。  
 如果使用 `.venv`，可以改成：
 
 ```json
@@ -81,8 +92,9 @@ python -m pip install -r requirements.lock.txt
 - `data/datingTestSet2.txt`
 - `data/MNIST/raw/*`
 - `p1/data/MNIST/raw/*`
+- `p2/data/cifar-10-batches-py/*`
 
-迁移到其他电脑时，把这些数据目录一起复制即可。MNIST 数据也可以由 `torchvision` 重新下载。
+迁移到其他电脑时，把这些数据目录一起复制即可。MNIST 和 CIFAR10 数据也可以由 `torchvision` 重新下载。大型数据目录已经在 `.gitignore` 中忽略，不建议提交到 Git。
 
 ## 快速验证
 
@@ -93,3 +105,9 @@ python -c "import numpy, pandas, matplotlib, sklearn, torch, torchvision; print(
 ```
 
 如果输出 `environment ok`，说明主要依赖已经安装成功。
+
+GPU 验证：
+
+```powershell
+python -c "import torch; print(torch.__version__, torch.version.cuda, torch.cuda.is_available()); print(torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'cpu')"
+```

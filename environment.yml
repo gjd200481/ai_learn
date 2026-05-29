@@ -1,8 +1,22 @@
-name: ai-learn
+name: dl-practice
 channels:
+  - pytorch
+  - nvidia
   - conda-forge
+  - defaults
 dependencies:
   - python=3.12
-  - pip
-  - pip:
-      - -r requirements.txt
+  - notebook
+  - jupyterlab
+  - ipykernel
+  - numpy
+  - pandas
+  - matplotlib
+  - scikit-learn
+  - scipy
+  - tqdm
+  - pytorch=2.5.1
+  - torchvision=0.20.1
+  - torchaudio=2.5.1
+  - pytorch-cuda=12.1
+  - torchinfo=1.8.0
